@@ -7,7 +7,7 @@ from transformers import CLIPProcessor, CLIPModel
 from ultralytics import YOLO
 
 ### the video file to process
-video_path = "videos/live_out.mov"     
+video_path = "videos/live_out.mov"  ### my video format is .mov but it's almost always .mp4    
 path_out = "best_match_zoom.jpg"
 
 ### Define the target attributes for the person we want to find
