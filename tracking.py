@@ -73,9 +73,9 @@ while cap.isOpened():
                 ### save score and most matched person
                 with torch.no_grad():
                     ### sotfmax function to evaluate (sum = 1.0 ou 100%)
-                    out_gender = clip_model(**inputs_genre).logits_per_image.softmax(dim=1).cpu().numpy()[0]
-                    out_color = clip_model(**inputs_couleur).logits_per_image.softmax(dim=1).cpu().numpy()[0]
-                    out_clothes = clip_model(**inputs_habit).logits_per_image.softmax(dim=1).cpu().numpy()[0]
+                    out_gender = clip_model(**inputs_gender).logits_per_image.softmax(dim=1).cpu().numpy()[0]
+                    out_color = clip_model(**inputs_color).logits_per_image.softmax(dim=1).cpu().numpy()[0]
+                    out_clothes = clip_model(**inputs_clothe).logits_per_image.softmax(dim=1).cpu().numpy()[0]
                 
                 # evaluate mean score of each attribute 
                 score_total = (out_genre[0] + out_couleur[0] + out_habit[0]) / 3.0
