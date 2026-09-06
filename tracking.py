@@ -78,7 +78,7 @@ while cap.isOpened():
                     out_clothes = clip_model(**inputs_clothe).logits_per_image.softmax(dim=1).cpu().numpy()[0]
                 
                 # evaluate mean score of each attribute 
-                score_total = (out_genre[0] + out_couleur[0] + out_habit[0]) / 3.0
+                score_total = (out_gender[0] + out_color[0] + out_clothes[0]) / 3.0
                 
                 ## save if its the best score ever seen
                 if score_total > best_global:
