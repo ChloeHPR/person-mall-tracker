@@ -37,6 +37,10 @@ cap = cv2.VideoCapture(video_path)
 total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) ### give the total number of frame for the analysis
 #frame_count = 0
 
+#  stock the score result 
+best_global = 0.0
+best_cropped_img = None
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -63,9 +67,22 @@ while cap.isOpened():
                 
                 ### evaluate attributes
                 inputs_gender = clip_processor(text=GENDER_choixe, images=crop, return_tensors="pt", padding=True).to(device)
+                inputs_color = clip_processor(text=COLOR_choice, images=crop, return_tensors="pt", padding=True).to(device)
+                inputs_clothe = clip_processor(text=CLOTHE_choice, images=crop, return_tensors="pt", padding=True).to(device)
                 
+                ### save score and most matched person
+                with torch.no_grad():
+                    ### sotfmax function to evaluate (sum = 1.0 ou 100%)
+                    out_gender = clip_model(**inputs_genre).logits_per_image.softmax(dim=1).cpu().numpy()[0]
+                    out_color = clip_model(**inputs_couleur).logits_per_image.softmax(dim=1).cpu().numpy()[0]
+                    out_clothes = clip_model(**inputs_habit).logits_per_image.softmax(dim=1).cpu().numpy()[0]
                 
-### save score and most matched person
-              
-    
+                # evaluate mean score of each attribute 
+                score_total = (out_genre[0] + out_couleur[0] + out_habit[0]) / 3.0
+                
+                ## save if its the best score ever seen
+                if score_total > best_global:
+                    best_global = score_total
+                    
+
 cap.release()
