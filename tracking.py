@@ -87,3 +87,14 @@ while cap.isOpened():
                     
 
 cap.release()
+
+
+### export the result 
+
+if best_cropped_img is not None:
+    cv2.imwrite(path_out, best_cropped_img)
+    print(f"Best match found with a score of : {best_global*100:.2f}%")
+    print(f"You can see the result in the following image : {path_out}")
+else:
+    print("\n[INFO] Aucune personne n'a été détectée dans la vidéo.")
+    
