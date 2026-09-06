@@ -96,5 +96,5 @@ if best_cropped_img is not None:
     print(f"Best match found with a score of : {best_global*100:.2f}%")
     print(f"You can see the result in the following image : {path_out}")
 else:
-    print("\n[INFO] Aucune personne n'a été détectée dans la vidéo.")
+    print("[ISSUE] Nobody found in the video.")
     
