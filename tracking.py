@@ -29,3 +29,39 @@ device = "mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is
 yolo_model = YOLO("yolov8n.pt") 
 clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
 clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+
+
+### video analysis and treatment 
+cap = cv2.VideoCapture(video_path)
+
+total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) ### give the total number of frame for the analysis
+#frame_count = 0
+
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break # end of the video in this case
+        
+    #frame_count += 1
+
+    # Detect person using class 0 with YOLO 
+    results = yolo_model(frame, classes=[0], conf=0.5, verbose=False)
+    boxes = results[0].boxes.xyxy.cpu().numpy()
+    
+    if len(boxes) > 0:
+        ### convert BGR to RGB for CLIP
+        img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        pil_image = Image.fromarray(img_rgb)
+        
+        for box in boxes:
+            x1, y1, x2, y2 = map(int, box)
+            
+            ### bounding box conditions
+            if x2 > x1 and y2 > y1:
+                ### to get only one person in a screenshot
+                crop = pil_image.crop((x1, y1, x2, y2))
+                
+                ### evaluate attributes
+### save score and most matched person
+
+cap.release()
