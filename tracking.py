@@ -66,9 +66,9 @@ while cap.isOpened():
                 crop = pil_image.crop((x1, y1, x2, y2))
                 
                 ### evaluate attributes
-                inputs_gender = clip_processor(text=GENDER_choixe, images=crop, return_tensors="pt", padding=True).to(device)
+                inputs_gender = clip_processor(text=GENDER_choice, images=crop, return_tensors="pt", padding=True).to(device)
                 inputs_color = clip_processor(text=COLOR_choice, images=crop, return_tensors="pt", padding=True).to(device)
-                inputs_clothe = clip_processor(text=CLOTHE_choice, images=crop, return_tensors="pt", padding=True).to(device)
+                inputs_clothe = clip_processor(text=CLOTHES_choice, images=crop, return_tensors="pt", padding=True).to(device)
                 
                 ### save score and most matched person
                 with torch.no_grad():
