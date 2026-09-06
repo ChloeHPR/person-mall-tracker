@@ -22,3 +22,9 @@ CLOTHES_choice = [CLOTHES, "wearing pants", "wearing a dress", "wearing a jacket
 
 ### creating the output directory if it doesn't exist
 os.makedirs("output", exist_ok=True)
+
+
+### models (yolo for detection and CLIP for classification)
+yolo_model = YOLO("yolov8n.pt") 
+clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
+clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
