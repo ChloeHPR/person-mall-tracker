@@ -23,6 +23,7 @@ CLOTHES_choice = [CLOTHES, "wearing pants", "wearing a dress", "wearing a jacket
 ### creating the output directory if it doesn't exist
 os.makedirs("output", exist_ok=True)
 
+device = "mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu"
 
 ### models (yolo for detection and CLIP for classification)
 yolo_model = YOLO("yolov8n.pt") 
