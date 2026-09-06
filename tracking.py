@@ -83,6 +83,7 @@ while cap.isOpened():
                 ## save if its the best score ever seen
                 if score_total > best_global:
                     best_global = score_total
+                    best_cropped_img = frame[y1:y2, x1:x2]
                     
 
 cap.release()
